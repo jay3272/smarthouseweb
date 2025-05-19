@@ -1,5 +1,5 @@
 # 智能家居靜態網站架構設計
-
+https://jay3272.github.io/smarthouseweb/
 ## 1. 網站結構
 
 ### 1.1 主要頁面
