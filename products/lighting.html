@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智能照明系統 - SmartLiving智能家居</title>
+    <style>
+        :root {
+            --primary: #007bff;
+            --secondary: #00c6ff;
+            --dark: #102a43;
+            --light: #f8f9fa;
+            --accent: #ff6b6b;
+            --text: #334e68;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', 'Noto Sans TC', sans-serif;
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--dark), var(--primary));
+            color: white;
+            padding: 0 5%;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .logo span {
+            color: var(--secondary);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 30px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.3s;
+            font-size: 1rem;
+        }
+
+        nav ul li a:hover {
+            color: var(--secondary);
+        }
+
+        .product-hero {
+            background: url('/api/placeholder/1600/600') no-repeat center center/cover;
+            height: 60vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            color: white;
+            margin-top: 70px;
+        }
+
+        .product-hero:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(16, 42, 67, 0.7);
+        }
+
+        .product-hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .product-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .product-hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .section {
+            padding: 80px 5%;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--dark);
+            margin-bottom: 20px;
+        }
+
+        .section-title p {
+            max-width: 600px;
+            margin: 0 auto;
+            color: var(--text);
+        }
+
+        .features {
+            background: var(--light);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-item {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: 0.3s;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .feature-item h3 {
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .product-item {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: 0.3s;
+            background: white;
+        }
+
+        .product-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .product-img {
+            height: 250px;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .product-details {
+            padding: 20px;
+        }
+
+        .product-details h3 {
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .product-price {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin: 15px 0;
+        }
+
+        .specs {
+            background: white;
+        }
+
+        .specs-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .specs-image {
+            flex: 1;
+            min-width: 300px;
+            padding: 20px;
+        }
+
+        .specs-image img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .specs-content {
+            flex: 1;
+            min-width: 300px;
+            padding: 20px;
+        }
+
+        .specs-list {
+            list-style: none;
+        }
+
+        .specs-list li {
+            margin-bottom: 15px;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .specs-list li:before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .faq {
+            background: var(--light);
+        }
+
+        .faq-item {
+            background: white;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .faq-question {
+            padding: 20px;
+            background: var(--primary);
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .faq-answer {
+            padding: 20px;
+            display: none;
+        }
+
+        .active .faq-answer {
+            display: block;
+        }
+
+        .cta {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            text-align: center;
+        }
+
+        .cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .cta p {
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn-white {
+            background: white;
+            color: var(--primary);
+        }
+
+        .btn-white:hover {
+            background: white;
+            color: var(--secondary);
+        }
+
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 60px 5% 30px;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .footer-column h3:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--secondary);
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul li a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--secondary);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        @media (max-width: 768px) {
+            .product-hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .toggle-menu {
+                display: block;
+                cursor: pointer;
+            }
+
+            nav {
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: var(--dark);
+                padding: 20px;
+                transform: translateY(-100%);
+                transition: 0.3s;
+                opacity: 0;
+                visibility: hidden;
+            }
+
+            nav.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+
+            nav ul {
+                flex-direction: column;
+            }
+
+            nav ul li {
+                margin: 15px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">Smart<span>Living</span></div>
+            <nav>
+                <ul>
+                    <li><a href="../index.html">首頁</a></li>
+                    <li><a href="../index.html#features">功能特點</a></li>
+                    <li><a href="../index.html#products">產品系列</a></li>
+                    <li><a href="../index.html#solutions">解決方案</a></li>
+                    <li><a href="../index.html#testimonials">客戶見證</a></li>
+                    <li><a href="../contact.html">聯繫我們</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="product-hero">
+        <div class="product-hero-content">
+            <h1>智能照明系統</h1>
+            <p>打造完美光環境，提升生活品質，節能環保的智能照明解決方案</p>
+            <a href="#products" class="btn">瀏覽產品</a>
+        </div>
+    </section>
+
+    <section class="section features">
+        <div class="section-title">
+            <h2>智能照明的優勢</h2>
+            <p>我們的智能照明系統不僅僅是燈光控制，更是生活品質的提升</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-item">
+                <div class="feature-icon">💡</div>
+                <h3>情境模式設置</h3>
+                <p>根據不同場景需求，一鍵切換多種燈光模式，如閱讀、電影、派對或睡眠模式</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">🎮</div>
+                <h3>多元化控制</h3>
+                <p>支持手機APP、語音控制、遙控器或智能開關等多種控制方式，靈活便捷</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">🔄</div>
+                <h3>自動調節</h3>
+                <p>根據日照變化、人員活動或時間自動調整亮度和色溫，營造最合適的光環境</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">💰</div>
+                <h3>節能省電</h3>
+                <p>智能感應無人自動關燈，減少能源浪費，每年可節省30%以上的照明電費</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">🌈</div>
+                <h3>豐富色彩</h3>
+                <p>1600萬種顏色變化，滿足個性化需求，為生活增添更多色彩和樂趣</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">🔌</div>
+                <h3>系統兼容</h3>
+                <p>與其他智能家居設備無縫連接，實現跨設備聯動控制</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="products">
+        <div class="section-title">
+            <h2>智能照明產品</h2>
+            <p>我們提供全系列智能照明產品，滿足家庭各種場景需求</p>
+        </div>
+        <div class="products-grid">
+            <div class="product-item">
+                <img src="/api/placeholder/400/300" alt="智能燈泡" class="product-img">
+                <div class="product-details">
+                    <h3>RGB智能燈泡</h3>
+                    <p>1600萬色彩變化，支持語音控制，可調亮度和色溫，壽命長達15000小時</p>
+                    <div class="product-price">NT$ 599</div>
+                    <a href="#" class="btn">了解詳情</a>
+                </div>
+            </div>
+            <div class="product-item">
+                <img src="/api/placeholder/400/300" alt="智能燈帶" class="product-img">
+                <div class="product-details">
+                    <h3>智能LED燈帶</h3>
+                    <p>可彎曲設計，適用於各種裝飾場景，音樂律動同步，自定義長度</p>
+                    <div class="product-price">NT$ 1,299</div>
+                    <a href="#" class="btn">了解詳情</a>
+                </div>
+            </div>
+            <div class="product-item">
+                <img src="/api/placeholder/400/300" alt="智能開關" class="product-img">
+                <div class="product-details">
+                    <h3>智能牆面開關</h3>
+                    <p>取代傳統開關，無需更換原有燈具，定時控制，遠程操作，觸控面板</p>
+                    <div class="product-price">NT$ 799</div>
+                    <a href="#" class="btn">了解詳情</a>
+                </div>
+            </div>
+            <div class="product-item">
+                <img src="/api/placeholder/400/300" alt="智能吸頂燈" class="product-img">
+                <div class="product-details">
+                    <h3>智能吸頂燈</h3>
+                    <p>超薄設計，自動調節亮度與色溫，月相模式，適合臥室和客廳</p>
+                    <div class="product-price">NT$ 2,499</div>
+                    <a href="#" class="btn">了解詳情</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section specs">
+        <div class="section-title">
+            <h2>核心技術規格</h2>
+            <p>我們的智能照明系統採用頂尖技術，確保穩定性能和卓越體驗</p>
+        </div>
+        <div class="specs-container">
+            <div class="specs-image">
+                <img src="/api/placeholder/500/500" alt="智能照明技術規格">
+            </div>
+            <div class="specs-content">
+                <ul class="specs-list">
+                    <li><strong>通訊協議</strong>：支持Wi-Fi、Zigbee和藍牙連接，確保穩定通訊</li>
+                    <li><strong>控制中心</strong>：高效能處理器，支持同時控制100+設備</li>
+                    <li><strong>相容性</strong>：兼容Amazon Alexa、Google Assistant和Apple HomeKit</li>
+                    <li><strong>安全加密</strong>：採用AES-128位加密，保護您的隱私和安全</li>
+                    <li><strong>能源效率</strong>：A++能效等級，比傳統照明節能最高達80%</li>
+                    <li><strong>燈光質量</strong>：高顯色指數(CRI>90)，接近自然光效果</li>
+                    <li><strong>系統響應</strong>：低延遲，指令執行時間<0.5秒</li>
+                    <li><strong>離線模式</strong>：斷網狀態下仍能使用基本功能</li>
+                    <li><strong>自動更新</strong>：OTA在線升級，持續優化系統性能</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="section faq">
+        <div class="section-title">
+            <h2>常見問題</h2>
+            <p>關於智能照明的一些常見疑問解答</p>
+        </div>
+        <div class="faq-container">
+            <div class="faq-item">
+                <div class="faq-question">智能照明系統是否難以安裝？</div>
+                <div class="faq-answer">
+                    <p>不會。我們的大多數產品都採用即插即用設計，無需專業電工即可安裝。智能燈泡和燈帶只需更換原有產品，智能開關則可能需要簡單的電路連接。我們也提供專業安裝服務，確保安全和正確安裝。</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">如果網絡斷線，智能燈光還能使用嗎？</div>
+                <div class="faq-answer">
+                    <p>可以。雖然部分高級功能需要網絡連接，但我們的智能照明系統具備離線模式，即使網絡斷線，您仍然可以使用基本的開關、亮度調節等功能。部分設備還會保存最後的設置，確保正常運作。</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">智能照明系統是否與其他智能家居設備兼容？</div>
+                <div class="faq-answer">
+                    <p>是的。我們的產品支持主流的智能家居生態系統，包括Amazon Alexa、Google Assistant、Apple HomeKit等。您可以將照明系統與其他智能設備（如安全攝像頭、溫控器等）連接，實現場景聯動。</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">智能照明系統的使用壽命有多長？</div>
+                <div class="faq-answer">
+                    <p>我們的LED智能照明產品平均壽命在15,000至25,000小時之間，日常使用可達7-10年。所有產品均提供2年保修，確保您的長期使用體驗。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section cta">
+        <h2>打造您的智能照明環境</h2>
+        <p>專業顧問為您提供個性化解決方案，免費上門評估</p>
+        <a href="../contact.html" class="btn btn-white">立即諮詢</a>
+    </section>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>關於我們</h3>
+                <ul>
+                    <li><a href="../about.html">公司簡介</a></li>
+                    <li><a href="../about.html#team">團隊介紹</a></li>
+                    <li><a href="../about.html#mission">企業使命</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>產品系列</h3>
+                <ul>
+                    <li><a href="lighting.html">智能照明</a></li>
+                    <li><a href="security.html">智能安全</a></li>
+                    <li><a href="kitchen.html">智能廚房</a></li>
+                    <li><a href="entertainment.html">智能娛樂</a></li>
+                    <li><a href="control-center.html">智能控制中心</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>解決方案</h3>
+                <ul>
+                    <li><a href="../solutions/whole-house.html">全屋智能</a></li>
+                    <li><a href="../solutions/office.html">智能辦公</a></li>
+                    <li><a href="../solutions/energy-saving.html">節能方案</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>聯繫我們</h3>
+                <ul>
+                    <li>電話: 02-1234-5678</li>
+                    <li>郵箱: info@smartliving.com</li>
+                    <li>地址: 台北市信義區智慧路88號</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 SmartLiving 智能家居. 版權所有.</p>
+        </div>
+    </footer>
+
+    <script>
+        // FAQ展開效果
+        const faqQuestions = document.querySelectorAll('.faq-question');
+        faqQuestions.forEach(question => {
+            question.addEventListener('click', () => {
+                const faqItem = question.parentElement;
+                faqItem.classList.toggle('active');
+            });
+        });
+
+        // 滾動效果
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // 滾動時改變導航欄樣式
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.style.background = 'var(--dark)';
+                header.style.boxShadow = '0 2px 10px rgba(0,0,0,0.2)';
+            } else {
+                header.style.background = 'linear-gradient(135deg, var(--dark), var(--primary))';
+                header.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+            }
+        });
+    </script>
+</body>
+</html>
