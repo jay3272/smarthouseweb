@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartLiving - 產品系列</title>
+    <style>
+        :root {
+            --primary: #007bff;
+            --secondary: #00c6ff;
+            --dark: #102a43;
+            --light: #f8f9fa;
+            --accent: #ff6b6b;
+            --text: #334e68;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', 'Noto Sans TC', sans-serif;
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--dark), var(--primary));
+            color: white;
+            padding: 0 5%;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .logo span {
+            color: var(--secondary);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 30px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.3s;
+            font-size: 1rem;
+        }
+
+        nav ul li a:hover {
+            color: var(--secondary);
+        }
+
+        .page-banner {
+            background: url('/api/placeholder/1600/400') no-repeat center center/cover;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            margin-top: 70px;
+        }
+
+        .page-banner:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(16, 42, 67, 0.7);
+        }
+
+        .banner-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            padding: 0 20px;
+        }
+
+        .banner-content h1 {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .section {
+            padding: 80px 5%;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--dark);
+            margin-bottom: 20px;
+        }
+
+        .section-title p {
+            max-width: 700px;
+            margin: 0 auto;
+            color: var(--text);
+        }
+
+        .filter-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+
+        .filter-btn {
+            padding: 10px 20px;
+            margin: 5px;
+            background: white;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .product-image {
+            height: 250px;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.5s;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.1);
+        }
+
+        .product-info {
+            padding: 25px;
+        }
+
+        .product-category {
+            color: var(--secondary);
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .product-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .product-info p {
+            margin-bottom: 20px;
+        }
+
+        .product-price {
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: var(--dark);
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .featured-products {
+            background: var(--light);
+        }
+
+        .product-categories {
+            background: white;
+        }
+
+        .categories-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .category-card {
+            position: relative;
+            height: 250px;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: 0.3s;
+        }
+
+        .category-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+
+        .category-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .category-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            color: white;
+        }
+
+        .category-overlay h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .cta {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            text-align: center;
+            padding: 80px 5%;
+            color: white;
+        }
+
+        .cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .cta p {
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+
+        .cta .btn {
+            background: white;
+            color: var(--primary);
+        }
+
+        .cta .btn:hover {
+            background: var(--dark);
+            color: white;
+        }
+
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 60px 5% 30px;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .footer-column h3:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--secondary);
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul li a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--secondary);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        @media (max-width: 768px) {
+            .banner-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .toggle-menu {
+                display: block;
+                cursor: pointer;
+            }
+
+            nav {
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: var(--dark);
+                padding: 20px;
+                transform: translateY(-100%);
+                transition: 0.3s;
+                opacity: 0;
+                visibility: hidden;
+            }
+
+            nav.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+
+            nav ul {
+                flex-direction: column;
+            }
+
+            nav ul li {
+                margin: 15px 0;
+            }
+
+            .filter-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .filter-btn {
+                width: 80%;
+                margin: 5px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">Smart<span>Living</span></div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">首頁</a></li>
+                    <li><a href="about.html">關於我們</a></li>
+                    <li><a href="products.html">產品系列</a></li>
+                    <li><a href="solutions.html">解決方案</a></li>
+                    <li><a href="case-studies.html">客戶案例</a></li>
+                    <li><a href="faq.html">常見問題</a></li>
+                    <li><a href="contact.html">聯繫我們</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="page-banner">
+        <div class="banner-content">
+            <h1>智能家居產品系列</h1>
+            <p>探索我們全方位的智能家居產品，打造舒適、安全、便捷的智慧生活</p>
+        </div>
+    </section>
+
+    <section class="section featured-products">
+        <div class="section-title">
+            <h2>熱門產品</h2>
+            <p>我們最受歡迎的智能家居產品，為您的生活提供便利與品質</p>
+        </div>
+        <div class="filter-container">
+            <button class="filter-btn active">全部</button>
+            <button class="filter-btn">智能照明</button>
+            <button class="filter-btn">智能安全</button>
+            <button class="filter-btn">智能廚房</button>
+            <button class="filter-btn">智能娛樂</button>
+            <button class="filter-btn">智能控制</button>
+        </div>
+        <div class="products-grid">
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="/api/placeholder/400/300" alt="智能燈泡">
+                </div>
+                <div class="product-info">
+                    <div class="product-category">智能照明</div>
+                    <h3>RGB智能燈泡</h3>
+                    <p>1600萬色彩變化，語音控制，自動調節亮度，定時開關，支持多場景設置</p>
+                    <div class="product-price">NT$ 699</div>
+                    <a href="products/lighting.html" class="btn">查看詳情</a>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="/api/placeholder/400/300" alt="智能門鎖">
+                </div>
+                <div class="product-info">
+                    <div class="product-category">智能安全</div>
+                    <h3>指紋識別智能門鎖</h3>
+                    <p>多種解鎖方式，高精度指紋識別，異常警報，遠程監控，一鍵開關</p>
+                    <div class="product-price">NT$ 8,999</div>
+                    <a href="products/security.html" class="btn">查看詳情</a>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="/api/placeholder/400/300" alt="智能音箱">
+                </div>
+                <div class="product-info">
+                    <div class="product-category">智能控制</div>
+                    <h3>AI語音助手</h3>
+                    <p>支援多種語言，遠場語音識別，智能家居控制中心，高保真音質</p>
+                    <div class="product-price">NT$ 3,499</div>
+                    <a href="products/control-center.html" class="btn">查看詳情</a>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="/api/placeholder/400/300" alt="智能冰箱">
+                </div>
+                <div class="product-info">
+                    <div class="product-category">智能廚房</div>
+                    <h3>智能冰箱</h3>
+                    <p>食材管理系統，自動溫度調節，食譜推薦，智能訂購，遠程控制</p>
+                    <div class="product-price">NT$ 42,900</div>
+                    <a href="products/kitchen.html" class="btn">查看詳情</a>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="/api/placeholder/400/300" alt="智能窗簾">
+                </div>
+                <div class="product-info">
+                    <div class="product-category">智能照明</div>
+                    <h3>自動化智能窗簾</h3>
+                    <p>日出日落自動調節，語音控制，手機APP遠程操作，場景聯動</p>
+                    <div class="product-price">NT$ 5,999</div>
+                    <a href="products/lighting.html" class="btn">查看詳情</a>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="/api/placeholder/400/300" alt="智能投影機">
+                </div>
+                <div class="product-info">
+                    <div class="product-category">智能娛樂</div>
+                    <h3>4K智能投影機</h3>
+                    <p>4K超高清解析度，自動對焦，智能內容推薦，語音控制，無線連接</p>
+                    <div class="product-price">NT$ 28,900</div>
+                    <a href="products/entertainment.html" class="btn">查看詳情</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section product-categories">
+        <div class="section-title">
+            <h2>產品類別</h2>
+            <p>我們的產品涵蓋家居生活的各個方面，探索更多智能選擇</p>
+        </div>
+        <div class="categories-container">
+            <a href="products/lighting.html" class="category-card">
+                <img src="/api/placeholder/600/400" alt="智能照明" class="category-image">
+                <div class="category-overlay">
+                    <h3>智能照明</h3>
+                    <p>智能燈泡，燈帶，吸頂燈，落地燈，情境照明</p>
+                </div>
+            </a>
+            <a href="products/security.html" class="category-card">
+                <img src="/api/placeholder/600/400" alt="智能安全" class="category-image">
+                <div class="category-overlay">
+                    <h3>智能安全</h3>
+                    <p>智能門鎖，監控攝像頭，門窗感應器，入侵警報</p>
+                </div>
+            </a>
+            <a href="products/kitchen.html" class="category-card">
+                <img src="/api/placeholder/600/400" alt="智能廚房" class="category-image">
+                <div class="category-overlay">
+                    <h3>智能廚房</h3>
+                    <p>智能冰箱，烤箱，咖啡機，料理機</p>
+                </div>
+            </a>
+            <a href="products/entertainment.html" class="category-card">
+                <img src="/api/placeholder/600/400" alt="智能娛樂" class="category-image">
+                <div class="category-overlay">
+                    <h3>智能娛樂</h3>
+                    <p>智能電視，音響系統，投影機，遊戲設備</p>
+                </div>
+            </a>
+            <a href="products/control-center.html" class="category-card">
+                <img src="/api/placeholder/600/400" alt="智能控制中心" class="category-image">
+                <div class="category-overlay">
+                    <h3>智能控制中心</h3>
+                    <p>AI語音助手，控制面板，集中管理系統</p>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <section class="cta">
+        <h2>不確定如何選擇適合的產品？</h2>
+        <p>我們的智能家居專家可以幫您評估需求，提供個性化的產品組合建議</p>
+        <a href="contact.html" class="btn">免費諮詢</a>
+    </section>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>關於我們</h3>
+                <ul>
+                    <li><a href="about.html">公司簡介</a></li>
+                    <li><a href="about.html#team">團隊介紹</a></li>
+                    <li><a href="about.html#mission">企業使命</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>產品系列</h3>
+                <ul>
+                    <li><a href="products/lighting.html">智能照明</a></li>
+                    <li><a href="products/security.html">智能安全</a></li>
+                    <li><a href="products/kitchen.html">智能廚房</a></li>
+                    <li><a href="products/entertainment.html">智能娛樂</a></li>
+                    <li><a href="products/control-center.html">智能控制中心</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>解決方案</h3>
+                <ul>
+                    <li><a href="solutions/whole-house.html">全屋智能</a></li>
+                    <li><a href="solutions/office.html">智能辦公</a></li>
+                    <li><a href="solutions/energy-saving.html">節能方案</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>聯繫我們</h3>
+                <ul>
+                    <li>電話: 02-1234-5678</li>
+                    <li>郵箱: info@smartliving.com</li>
+                    <li>地址: 台北市信義區智慧路88號</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 SmartLiving 智能家居. 版權所有.</p>
+        </div>
+    </footer>
+
+    <script>
+        // 滾動效果
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // 滾動時改變導航欄樣式
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.style.background = 'var(--dark)';
+                header.style.boxShadow = '0 2px 10px rgba(0,0,0,0.2)';
+            } else {
+                header.style.background = 'linear-gradient(135deg, var(--dark), var(--primary))';
+                header.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+            }
+        });
+
+        // 簡單的篩選功能
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // 移除所有按鈕的active類
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                // 為當前點擊的按鈕添加active類
+                this.classList.add('active');
+                
+                // 在這裡可以添加實際的產品篩選邏輯
+                // 這裡只是一個視覺效果示例
+            });
+        });
+    </script>
+</body>
+</html>
